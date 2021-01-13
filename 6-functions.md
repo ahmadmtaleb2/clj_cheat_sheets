@@ -75,7 +75,47 @@
 
 ### Destructuring
 - The basic idea behind destructuring is that it lets you concisely bind names to values within a collection
-- 
+>
+>(defn my-first
+>
+>    [[first-thing]]
+>
+>    first-thing)
+>
+>(my-first ["oven" "bike" "war-axe"])
+>
+> ;=> "oven" is the result
+- what happens is that my-first function associates th symbol firt-thing with the first element of the vector that was passed in as argument.
+- this function is going to receive a **list** or **vector** as an argument. Clojure will take apart the argument's structure and associate meaningful names with different parts of the argument.
+- when destructuring a vector or list, you can name as many elements as you want and also use **rest parameters**
+- the rest parameters handles any number of additional arguments
+> (defn chooser
+>
+>    [[first-choice second-choice & unimportant-choices]]
+>
+>       (println (str "Your first choice is: " first-choice))
+>
+>       (println (str "Your second choice is: " second-choice))
+>
+>       (println (str "We're ignoring the rest of your choices. "
+>
+>       "Here they are in case you need to cry over them: " (**clojure.string/join ", "** unimportant-choices))))
+>   
+>   (chooser ["Marmalade", "Handsome Jack", "Pigpen", "Aquaman"])
+; => Your first choice is: Marmalade
+; => Your second choice is: Handsome Jack
+; => We're ignoring the rest of your choices. Here they are in case you need to cry over them: Pigpen, Aquaman
+
+- you can desctruct maps in the same way of destructuring vector or list by providing maps as a parameter **{}**
+> 
+> (defn treasure-location
+
+>    [{lat :lat lng :lng}] ;; [{:keys[lat lng]}] for shorter syntax
+>
+>    (println (str "treasure lat: " lat "treasure lng:" lng)))
+>
+> (treasure-location {:lat 28.22 :lng 81.33})
+- [{:keys [lat lng] :as location}] to access the original map argument by :as location 
 
 
 ### function body 
@@ -84,16 +124,24 @@
 
 ## anonymous functions 
 - In Clojure, functions don’t need to have names
+- You can treat fn nearly identically to the way you treat defn . The parameter lists and function bodies work exactly the same. You can use argument destructuring, rest parameters, and so on.
+- you could associate the anonymous function with a name like (def multiplier (fn [x] (* x 3)))
 
 ### create an anonymous function 
 1. **fn** form
-2. 
 > (fn 
+>
 > [param-list]
+>
 > function-body)
+2. more compact way; the percent sign, % , indicates the argument passed to the function. If your anonymous function takes multiple arguments, you can distinguish them like this: %1 , %2 , %3 , and so on. % is equivalent to %1
+> (#(str %1 " and " %2) "cornbread" "butter beans")
 >
+> output: "cornbread and butter beans"
+- we can pass a rest parameter with **%&**
+> (#(identity %&) 1 "blarg" :yip)
 >
-
+> output: (1 "blarg" :yip)
 
 ## calling functions 
 - **Function call** is just another term for an operation where the operator is a function or a function expression (an expression that returns a function).
@@ -113,16 +161,23 @@
 ## macro calls 
 - Macros are similar to special forms in that they evaluate their operands differently from function calls, and they also can’t be passed as arguments to functions.
 
-
-## map function
-- **map** creates a new list by applying a function to each member of a collection 
-- **map** doesn't return a vector, even if we supplied a vector as an argument
-- map allows you to generalize the process of transforming a collection by applying a function—any function—over any collection.
-
-## inc function
-- **inc** function increments a number by 1
-
->(inc 1.1) ;=? 2.1
+## returning functions 
+- functions can return other functons.
+- The returned
+functions are closures, which means that they can access all the variables that were in scope when the function was created.
+> (defn inc-maker
 >
->(map inc [0 1 2 3]) ;=> (1 2 3 4)
+>    "create a custom incrementor"
+>
+>    [inc-by]
+>
+>    #(+ % inc-by))
+>
+> (def inc3 (inc-maker 3))
+>
+>(inc3 7)
+> output: 10 *inc-by is in scope, so the returned function has access to it even when the returned function is used outside inc-maker* **didn't understand**
+
+## rest arguments
+- rest arguments are store as lists, so the function application returns a list of all the arguments
 

@@ -60,8 +60,40 @@
 - It is better to have 100 functions operate on one data structure than 10 functions on 10 data structures. —Alan Perlis
 - gain code reusability by sticking to basic data structures
 
+
+## Abstraction
+- Clojure defines map and reduce functions in terms of the *sequence abstraction* not in terms of specific data structures.
+- As long as a data structure responds to the **core sequence operations** (the **functions first , rest , and cons**), it will work with map , reduce , and other sequence functions. **??**
+- The three functions **define** the sequence abstraction.
+- abstractions could be thought as named collections of operations.
+- If you can perform all of an abstraction’s operations on an object, then that object is an instance of the abstraction.
+- For example, the battery abstraction includes the operation “connect a conducting medium to its anode and cathode,” and the operation’s output is electrical current. It doesn’t matter if the battery is made out of lithium or out of potatoes. It’s a battery as long as it responds to the set of operations that define battery.
+
+## MAP
+- Similarly, map doesn’t care about how lists, vectors, sets, and maps are implemented. It only cares about whether it can perform sequence operations on them.
+- map essential behavior is to derive a new sequence y from an existing sequence x using a function ƒ such that 
+> y1 = ƒ(x1), y2 = ƒ(x2), . . . yn = ƒ(xn).
+
+- The term sequence here refers to a collection of elements organized in linear order.
+- a linear order **is not** an unordered collection or a graph without a before-and-after relationship between its nodes.
+- Absent from this description of mapping and sequences is any mention of lists, vectors, or other concrete data structures. Clojure is designed to allow us to think and program in such abstract terms as much as possible, and it does this by implementing functions in terms of data structure abstractions. like **map**, it is defined in terms of the sequence abstraction 
+
+
+## Indirection 
+- In programming, indirection is a generic term for the mechanisms a language employs so that one name can have multiple, related meanings.
+- In the case of Clojure, the name first has multiple, data structure–specific meanings.
+- Indirection is what makes abstraction possible.
+
+
+## Ploymorphism
+- Polymorphism is one way that Clojure provides indirection.
+- polymorphic functions dispatch to different function bodies based on the type of the argument supplied. (It’s not so different from how multiple-arity functions dispatch to different function bodies based on the number of arguments you provide.)
+- Clojure has two constructs for defining polymorphic dispatch: the **host platform’s interface construct** and **platform-independent protocols**.
+
+
 # Errors
 - *cannot be cast to clojure.lang.IFn* just means that you’re trying to use something as a function when it’s not.
 - *class java.lang.Long cannot be cast to class clojure.lang.IFn* means a number is being used where a function is expected.
+> I was using the take function like this (take(arg1 arg2)) where in fact i should use it like this (take arg1 arg2)
 - Parenthesis in Clojure are not a grouping construct, they are used primarily to invoke function calls.
 - 

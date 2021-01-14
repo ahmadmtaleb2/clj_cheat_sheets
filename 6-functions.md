@@ -78,6 +78,42 @@
 - "karate" is the default value of chop-type
 - you can also make each arity do something completely unrelated
 
+
+### anonymous functions 
+- In Clojure, functions don’t need to have names
+- You can treat fn nearly identically to the way you treat defn . The parameter lists and function bodies work exactly the same. You can use argument destructuring, rest parameters, and so on.
+- you could associate the anonymous function with a name like (def multiplier (fn [x] (* x 3)))
+
+#### create an anonymous function 
+1. **fn** form
+> (fn [param-list] function-body)
+>
+> ((fn add-five [x] (+ x 5)) 3) => output: 8
+>
+> ((fn [x] (+ x 5)) 3) => output: 8
+
+2. usinf the **#()**: this syntax omits the parameter list and names parameters based on their position. **Nested anonymous functions would create an ambiguity as the parameters are not named, so nesting is not allowed.**
+    - the percent sign, **%** , indicates the argument passed to the function.
+    - **%** is used for a single parameter
+    - **%1, %2, %3, etc** are used for multiple parameters
+    - **%&** is used for any remaining (variadic) parameters
+
+> (#(+ % 5) 3) => output: 8
+>
+> (#(str %1 " and " %2) "cornbread" "butter beans") => output: "cornbread and butter beans"
+>
+> (#(identity %&) 1 "blarg" :yip) => output: (1 "blarg" :yip)
+>
+> (#(println %1 %2 %&) 1 2 3 4) => output: 1 2 (3 4) also a **nil** return value
+>
+> (#(nth % (dec (count %))) [1 2 3 4 5]) => output: 5
+
+3. using the **partial**: it takes a function f and fewer than the normal arguments to f, and returns a fn that takes a variable number of additional args. When called, the returned function calls f with args + additional args.
+> (partial f) or (partial f arg1) or (partial f arg1 arg2) or (partial f arg1 arg2 arg3) or (partial f arg1 arg2 arg3 & more)
+>
+> ((partial + 5) 3) => output: 8
+
+
 ### Variadic functions
 - Functions may also define a variable number of parameters - this is known as a "variadic" function.
 - The variable parameters must occur at the end of the parameter list. 
@@ -144,40 +180,6 @@
 - the function body can contain forms of any kind
 - Clojure automatically return the last form evaluated
 
-## anonymous functions 
-- In Clojure, functions don’t need to have names
-- You can treat fn nearly identically to the way you treat defn . The parameter lists and function bodies work exactly the same. You can use argument destructuring, rest parameters, and so on.
-- you could associate the anonymous function with a name like (def multiplier (fn [x] (* x 3)))
-
-### create an anonymous function 
-1. **fn** form
-> (fn [param-list] function-body)
->
-> ((fn add-five [x] (+ x 5)) 3) => output: 8
->
-> ((fn [x] (+ x 5)) 3) => output: 8
-
-2. usinf the **#()**: this syntax omits the parameter list and names parameters based on their position. **Nested anonymous functions would create an ambiguity as the parameters are not named, so nesting is not allowed.**
-    - the percent sign, **%** , indicates the argument passed to the function.
-    - **%** is used for a single parameter
-    - **%1, %2, %3, etc** are used for multiple parameters
-    - **%&** is used for any remaining (variadic) parameters
-
-> (#(+ % 5) 3) => output: 8
->
-> (#(str %1 " and " %2) "cornbread" "butter beans") => output: "cornbread and butter beans"
->
-> (#(identity %&) 1 "blarg" :yip) => output: (1 "blarg" :yip)
->
-> (#(println %1 %2 %&) 1 2 3 4) => output: 1 2 (3 4) also a **nil** return value
->
-> (#(nth % (dec (count %))) [1 2 3 4 5]) => output: 5
-
-3. using the **partial**: it takes a function f and fewer than the normal arguments to f, and returns a fn that takes a variable number of additional args. When called, the returned function calls f with args + additional args.
-> (partial f) or (partial f arg1) or (partial f arg1 arg2) or (partial f arg1 arg2 arg3) or (partial f arg1 arg2 arg3 & more)
->
-> ((partial + 5) 3) => output: 8
-
 
 ## calling functions 
 - **Function call** is just another term for an operation where the operator is a function or a function expression (an expression that returns a function).
@@ -196,6 +198,7 @@
 
 ## macro calls 
 - Macros are similar to special forms in that they evaluate their operands differently from function calls, and they also can’t be passed as arguments to functions.
+
 
 ## returning functions 
 - functions can return other functons.
@@ -216,6 +219,7 @@ functions are closures, which means that they can access all the variables that 
 
 ## rest arguments
 - rest arguments are store as lists, so the function application returns a list of all the arguments
+
 
 ## defn vs def
 - It might be useful to think of **defn** as a contraction of **def** and **fn**.

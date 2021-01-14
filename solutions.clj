@@ -16,3 +16,6 @@
 (fn [list] (reduce + list))
 
 ;;Write a function which returns only the odd numbers from a sequence.
+(fn [list] (filter odd? list))
+
+;; Write a function which returns the first X fibonacci numbers.

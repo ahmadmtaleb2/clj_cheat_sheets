@@ -11,3 +11,6 @@
 - Clojure strings are Java strings. This means that you can use any of the Java string methods on Clojure strings.
 > (.toUpperCase "string")
 
+### capitalize
+- Converts first character of the string to upper-case, all other characters to lower-case.
+> (**clojure.string/capitalize** "mIxEd CaSe") => output: "Mixed case"

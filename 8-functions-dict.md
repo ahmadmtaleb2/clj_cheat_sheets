@@ -1,19 +1,77 @@
 # Functions dictionary 
 it is a document that group all the functions that I encountered so far
 
-## map function
+## map 
+- The map function takes two arguments: 
+    1. a function (f) and 
+    2. a sequence (s) or collection. 
 - **map** creates a new list by applying a function to each member of a collection 
 - **map** doesn't return a vector, even if we supplied a vector as an argument
 - map allows you to generalize the process of transforming a collection by applying a function—any function—over any collection.
+>(map inc [0 1 2 3]) => output: (1 2 3 4)
 
-## inc function
+
+## filter  
+- The filter function takes two arguments: 
+    1. a predicate function (f) and 
+    2. a sequence (s). 
+- Filter returns a new sequence consisting of all the items of s for which (f item) returns true.
+> (filter #(> % 5) '(3 4 5 6 7)) => output: (6 7)
+
+## count  
+- Returns the number of items in the collection. 
+- (count nil) returns 0.
+- Also works on strings, arrays, and Java Collections and Maps
+> (count coll)
+> 
+> (count nil) => output: 0
+>
+> (count []) => output: 0
+> (count [1 2 3]) => output: 3
+>
+> (count {:one 1 :two 2}) => output: 2
+>
+> (count [1 \a "string" [1 2] {:foo :bar}]) => output: 5
+> 
+> (count "string") => output: 6
+
+## dec 
+- Returns a number one less than x. 
+- Does not auto-promote longs, will throw on overflow
+> (dec x)
+>
+> (dec 2) => output: 1
+>
+> (dec 2.0) => output: 1.0
+>
+> (dec 1) => output: 0
+>
+> (dec -1)  => output: -2
+
+## nth
+- Returns the value at the index. 
+- get returns nil if index out of bounds, 
+- nth throws an exception unless not-found is supplied.
+- nth also works for strings, Java arrays, regex Matchers and Lists, and, in O(n) time, for sequences.
+> (nth coll index)  (nth coll index not-found)
+>
+> (nth ["a" "b" "c" "d"] 0) => output: "a"
+>
+> (nth ["a" "b" "c" "d"] 1) => output: "b"
+>
+> (nth [] 0) => output: IndexOutOfBoundsException
+>
+> (nth [] 0 "nothing found") => output: "nothing found"
+>
+> (nth [0 1 2] 77 1337) => output: 1337
+
+
+## inc 
 - **inc** function increments a number by 1
 
->(inc 1.1) ;=? 2.1
->
->(map inc [0 1 2 3]) ;=> (1 2 3 4)
+>(inc 1.1) => output: 2.1
 
-## identity function 
+## identity  
 - the identity function returns the argument it's given without altering it.
 > (identity 4) => output: 4
 
@@ -108,5 +166,17 @@ it is a document that group all the functions that I encountered so far
 - didn't find this one 
 
 
+
+## first, second and last
+- All Clojure collections support sequencing. You can operate on sequences with functions like first, second, and last.
+> (= 3 (first '(3 2 1))) => output: true
+>
+> (= 3 (second [2 3 4])) => output: true
+>
+> (= 3 (last (list 1 2 3))) => output: true
+
+## rest
+- The rest function will return all the items of a sequence except the first.
+> (= [20 30 40] (rest[10 20 30 40]))
 
 ## 

@@ -62,4 +62,6 @@
 
 # Errors
 - *cannot be cast to clojure.lang.IFn* just means that you’re trying to use something as a function when it’s not.
+- *class java.lang.Long cannot be cast to class clojure.lang.IFn* means a number is being used where a function is expected.
+- Parenthesis in Clojure are not a grouping construct, they are used primarily to invoke function calls.
 - 

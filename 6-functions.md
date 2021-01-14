@@ -1,17 +1,21 @@
 # Functions 
 
+- Clojure is a functional language. 
+- Functions are first-class and can be passed-to or returned-from other functions. 
+- Most Clojure code consists primarily of pure functions (no side effects), so invoking with the same inputs yields the same output.
+
 ## Defining functions
 - function definitions are composed of five main parts:
     1. defn
     2. function name
     3. a docstring describing the function (optional)
-    4. parameters listed in brackets
+    4. parameters vector
     5. function body
 >
->(defn too-enthusiastic
+>(defn greet
 >   "return a cheer that might be a bit to enthousistic"
 >   [name]
->   (str "Oh ,u god!" name " you are most definitely the best"!))
+>   (str "Oh , hello!" name " you are most definitely the best"!))
 
 ### Doctring
 - The docstring is a useful way to describe and document your code. 
@@ -34,7 +38,11 @@
 >    [x y]
 >    (str "two params!" x y))
 
-- Functions also support **arity overloading**. This means that you can define a function so a different function body will run depending on the arity.
+- Functions also support **arity overloading**. 
+- Functions can be defined to take different numbers of parameters (different "arity").
+- This means that you can define a function so a different function body will run depending on the arity.
+-  Different arities must all be defined in the same defn - using defn more than once will replace the previous function.
+
 > (defn multi-arity
 >
 >    ;; 3-arity arguments and body
@@ -49,6 +57,16 @@
 >    ([first-arg]
 >        (do-things first-arg)))
 
+> (defn messenger
+>
+>    [] (messenger "Hello World!")
+>
+>    [msg] (println msg))
+>
+> (messenger) => output: "Hello World!" + nil
+>
+> (messenger "Hello class") => output: "Hello class" + nil
+
 - you can define a function in terms of itself like the following
 > (defn x-chop
 >    "describe the kind of chop you're inflicting on someone"
@@ -60,15 +78,19 @@
 - "karate" is the default value of chop-type
 - you can also make each arity do something completely unrelated
 
-- Clojure also allows to define variable-arity functions by including a **rest parameter** as in "put the rest of these arguments in a list with the following name"
+### Variadic functions
+- Functions may also define a variable number of parameters - this is known as a "variadic" function.
+- The variable parameters must occur at the end of the parameter list. 
+- They will be collected in a sequence for use by the function.
+- The beginning of the variable parameters is marked with an ampersand **&**.
+- Clojure also allows to define variable-arity functions by including a 
+- **rest parameter** as in "put the rest of these arguments in a list with the following name"
 - the rest parameter is indicated by an ampersand **&**
-> (defn codger-communication
->    [whippersnapper]
->    (str "get of my lawn, " whippersnapper))
+> (defn hello [greeting & who]
 >
->   (defn codger
->    [&whippersnapper]
->    (map codger-communication whippersnapper))
+>    (println greeting who))
+>
+> (hello "Hello" "world" "class") => ouput: Hello (world class)
 
 - You can mix rest parameters with normal parameters, but the rest parameter has to come last
 
@@ -129,19 +151,33 @@
 
 ### create an anonymous function 
 1. **fn** form
-> (fn 
+> (fn [param-list] function-body)
 >
-> [param-list]
+> ((fn add-five [x] (+ x 5)) 3) => output: 8
 >
-> function-body)
-2. more compact way; the percent sign, % , indicates the argument passed to the function. If your anonymous function takes multiple arguments, you can distinguish them like this: %1 , %2 , %3 , and so on. % is equivalent to %1
-> (#(str %1 " and " %2) "cornbread" "butter beans")
+> ((fn [x] (+ x 5)) 3) => output: 8
+
+2. usinf the **#()**: this syntax omits the parameter list and names parameters based on their position. **Nested anonymous functions would create an ambiguity as the parameters are not named, so nesting is not allowed.**
+    - the percent sign, **%** , indicates the argument passed to the function.
+    - **%** is used for a single parameter
+    - **%1, %2, %3, etc** are used for multiple parameters
+    - **%&** is used for any remaining (variadic) parameters
+
+> (#(+ % 5) 3) => output: 8
 >
-> output: "cornbread and butter beans"
-- we can pass a rest parameter with **%&**
-> (#(identity %&) 1 "blarg" :yip)
+> (#(str %1 " and " %2) "cornbread" "butter beans") => output: "cornbread and butter beans"
 >
-> output: (1 "blarg" :yip)
+> (#(identity %&) 1 "blarg" :yip) => output: (1 "blarg" :yip)
+>
+> (#(println %1 %2 %&) 1 2 3 4) => output: 1 2 (3 4) also a **nil** return value
+>
+> (#(nth % (dec (count %))) [1 2 3 4 5]) => output: 5
+
+3. using the **partial**: it takes a function f and fewer than the normal arguments to f, and returns a fn that takes a variable number of additional args. When called, the returned function calls f with args + additional args.
+> (partial f) or (partial f arg1) or (partial f arg1 arg2) or (partial f arg1 arg2 arg3) or (partial f arg1 arg2 arg3 & more)
+>
+> ((partial + 5) 3) => output: 8
+
 
 ## calling functions 
 - **Function call** is just another term for an operation where the operator is a function or a function expression (an expression that returns a function).
@@ -181,3 +217,11 @@ functions are closures, which means that they can access all the variables that 
 ## rest arguments
 - rest arguments are store as lists, so the function application returns a list of all the arguments
 
+## defn vs def
+- It might be useful to think of **defn** as a contraction of **def** and **fn**.
+- the **fn** defines the function and 
+- the **def** binds it to a name. 
+- The following statements are equivalent:
+> (defn greet [name] (str "Hello, " name))
+>
+> (def greet (fn [name] (str "Hello, " name)))

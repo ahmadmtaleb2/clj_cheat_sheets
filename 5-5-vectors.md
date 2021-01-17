@@ -9,37 +9,27 @@
 > [3 2 1]
 
 2.  vector function: it creates a new vector containing the args.
-> (vector "creepy" "full" "moon")  => output: ["creepy" "full" "moon"]
+> (vector "creepy" "full" "moon")       => output: ["creepy" "full" "moon"]
 >
-> (vector {:a 1 :b 2 :c 3}) => output: [{:a 1, :b 2, :c 3}]
+> (vector {:a 1 :b 2 :c 3})     => output: [{:a 1, :b 2, :c 3}]
 
 3. vec function **(vec coll)** => Creates a new vector containing the contents of **coll**. Java arrays will be aliased and should not be modified.
 
-> (vec '(1 2 3)) => output: [1 2 3]
+> (vec '(1 2 3))        => output: [1 2 3]
 >
-> (vec [1 2 3]) => output: [1 2 3]
+> (vec [1 2 3])     => output: [1 2 3]
 >
-> (vec #{1 2 3}) => output: [1 2 3]
+> (vec #{1 2 3})        => output: [1 2 3]
 >
-> (vec {:a 1 :b 2 :c 3}) => output: [[:a 1] [:b 2] [:c 2]]
+> (vec {:a 1 :b 2 :c 3})        => output: [[:a 1] [:b 2] [:c 2]]
 >
-> (vec '()) => output: []
+> (vec '())     => output: []
 >
-> (vec nil) => output: []
+> (vec nil)     => output: []
 
 
 ## look up for values
 - returning the nth element of a vector 
-> (get [3 2 1] 0) ; => 3
+> (get [3 2 1] 0)       => output: 3
 >
-> (get ["a" {:name "Pugsley Winterbottom"} "c"] 1) ; => {:name "Pugsley Winterbottom"}
-
-
-## functions used on vectors
-
-### conj
-- **conj** function is used to add additional elements to the vector.
-- Elements are added to the end of a vector
-> (conj [1 2 3] 4) ; => [1 2 3 4]
-
-### 
+> (get ["a" {:name "Pugsley Winterbottom"} "c"] 1)      => output: {:name "Pugsley Winterbottom"}

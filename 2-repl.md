@@ -5,10 +5,7 @@
 - REPL development is an essential part of the Lisp experience, and you'd really be missing out if you didn't use it.
 - Conceptually, the REPL is similar to Secure Shell (SSH). In the same way that you can use SSH to interact with a remote server, the Clojure REPL allows you to interact with a running Clojure process.
 - This feature can be very powerful because you can even attach a REPL to a live production app and modify your program as it runs.
-- 
-
-
-
+ 
 
 
 ## REPL process
@@ -22,4 +19,4 @@
 
 ## Start REPL
 > lein repl
->
+

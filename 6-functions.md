@@ -13,8 +13,11 @@
     5. function body
 >
 >(defn greet
+>
 >   "return a cheer that might be a bit to enthousistic"
+>
 >   [name]
+>
 >   (str "Oh , hello!" name " you are most definitely the best"!))
 
 ### Doctring

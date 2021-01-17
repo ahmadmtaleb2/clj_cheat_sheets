@@ -1,14 +1,12 @@
 # Naming values with def
 - you use def to **bind** a **name** to a **value** in Clojure
 - **def** as if it's defining constants
+
+> (def p-names ["Larry Porter" "Dora the explorer" "the incredible bulk"])
 >
-> (def failed-protagonis-names
->        ["Larry Porter" "Dora the explorer" "the incredible bulk"])
+> p-names   => output: ["Larry Porter" "Dora the explorer" "the incredible bulk"]
 >
-> failed-protagonist-name
-> ;=> ["Larry Porter" "Dora the explorer" "the incredible bulk"]
->
-- In this case, you’re binding the name failed-protagonist-names to a vector containing three strings
+- In this case, you’re binding the name p-names to a vector containing three strings
 - **bind** is equivalent to **assign** in other languages
 - in other languages you can perform multiple assignments to the same variable 
 - **what about clojure?**

@@ -13,26 +13,24 @@
     2. Operations
 - the term **form** is used to refer to valid code.
 - Clojure evaluates every form to produce a value. the following literals are representations of valid forms
-> 
 > 1
-> " a string"
-> ["a" "vector" "of" "strings"]
 >
+> " a string"
+>
+> ["a" "vector" "of" "strings"]
+
 - liteals are used in operations
 - Operations are how you do things. All Operations take the form of *opening parenthesis, operator, operands, closing parenthesis*
->
 > (operator operand1 operand 2 ... operandn)
->
+
 - Clojure uses whitespace to separate operands, and it treats commas as whitespace. NO COMMAS!
 - the **+** operator adds the operrands 
 - the **str** operator concatenates strings to form a new string 
-- Clojure’s support for first-class functions allows you to build more power­f ul abstractions than you can in languages without them. Those unfamiliar with this kind of programming think of functions as allowing you to generalize operations over data instances.
+- Clojure’s support for first-class functions allows you to build more power­ful abstractions than you can in languages without them. Those unfamiliar with this kind of programming think of functions as allowing you to generalize operations over data instances.
 - Clojure (and all Lisps) allows you to create functions that generalize over processes.
 - Clojure has no privileged functions. It doesn't care what the function is or where it came from; it treats all functions the same. 
 - Clojure just cares about applying functions
 - You don’t have to worry about special rules or syntax for working with different functions.
-- 
-
 
 
 ## Clojure language
@@ -71,7 +69,7 @@
 
 ## MAP
 - Similarly, map doesn’t care about how lists, vectors, sets, and maps are implemented. It only cares about whether it can perform sequence operations on them.
-- map essential behavior is to derive a new sequence y from an existing sequence x using a function ƒ such that 
+- map essential behavior is to derive a new sequence Y from an existing sequence X using a function F such that 
 > y1 = ƒ(x1), y2 = ƒ(x2), . . . yn = ƒ(xn).
 
 - The term sequence here refers to a collection of elements organized in linear order.

@@ -25,3 +25,11 @@
 
 - Clojure’s sequence functions use seq on their arguments.
 - The sequence functions are defined in terms of the sequence abstraction, using first , rest , and cons . As long as a data structure implements the sequence abstraction, it can use the extensive seq library, which includes such superstar functions as reduce, filter, distinct, group-by, and dozens more.
+
+
+# Lazy Seqs
+- Many functions, including map and filter , return a lazy seq. 
+- A lazy seq is a seq whose members aren’t computed until you try to access them. 
+- Computing a seq’s members is called realizing the seq
+- Deferring the computation until the moment it’s needed makes your programs more efficient, and it has the surprising benefit of allowing you to construct **infinite sequences**.
+- 

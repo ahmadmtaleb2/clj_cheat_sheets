@@ -67,15 +67,6 @@
 - If you can perform all of an abstraction’s operations on an object, then that object is an instance of the abstraction.
 - For example, the battery abstraction includes the operation “connect a conducting medium to its anode and cathode,” and the operation’s output is electrical current. It doesn’t matter if the battery is made out of lithium or out of potatoes. It’s a battery as long as it responds to the set of operations that define battery.
 
-## MAP
-- Similarly, map doesn’t care about how lists, vectors, sets, and maps are implemented. It only cares about whether it can perform sequence operations on them.
-- map essential behavior is to derive a new sequence Y from an existing sequence X using a function F such that 
-> y1 = ƒ(x1), y2 = ƒ(x2), . . . yn = ƒ(xn).
-
-- The term sequence here refers to a collection of elements organized in linear order.
-- a linear order **is not** an unordered collection or a graph without a before-and-after relationship between its nodes.
-- Absent from this description of mapping and sequences is any mention of lists, vectors, or other concrete data structures. Clojure is designed to allow us to think and program in such abstract terms as much as possible, and it does this by implementing functions in terms of data structure abstractions. like **map**, it is defined in terms of the sequence abstraction 
-
 
 ## Indirection 
 - In programming, indirection is a generic term for the mechanisms a language employs so that one name can have multiple, related meanings.

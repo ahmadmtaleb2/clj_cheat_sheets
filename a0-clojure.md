@@ -84,10 +84,76 @@
 - polymorphic functions dispatch to different function bodies based on the type of the argument supplied. (It’s not so different from how multiple-arity functions dispatch to different function bodies based on the number of arguments you provide.)
 - Clojure has two constructs for defining polymorphic dispatch: the **host platform’s interface construct** and **platform-independent protocols**.
 
+# what is a pure function?? println and rand aren't pure function??
+- look up for this 
+
+# Functional programming
+- Going beyond immediately practical concerns, the differences between the way you write object-oriented and functional code point to a deeper difference between the two mindsets. 
+- Programming is about manipulating data for your own purposes. 
+    1. In OOP, you think about data as something you can embody in an object, and you poke and prod it until it looks right. During this process, your original data is lost forever unless you’re very careful about preserving it. 
+    2. By contrast, in functional programming you think of data as unchanging, and you derive new data from existing data.
+## pure functions
+- a function is pure if it meets 2 qualifications:
+    1. it always returns the same result if given the same arguments => this is called **referential transparency**
+    2. it can't cause any **side effects** => which means that the function can't make any changes that are observable outside the function itself => for example, by changing an externally accessible mutuable object or writing to a file 
+- they are completely isolated, unable to impact other parts of the system => there is no need to ask "What could I break by calling this function?"
+- they are consistent => you'll never need to figure out why passing a function the same arguments results in different return values => it will never happen 
+- they are stable and problem free
+
+### referentially transparent 
+- return the same result when called with the same argument 
+- pure functions rely on 
+    1. their own arguments 
+    2. immutable values to determine their return value 
+- any function that relies on a random number generator cannot be referentially transparent 
+- if a function reads from a file, it's not referentially transparent because the file's contents can change 
+- When using a referentially transparent function, you never have to consider what possible external conditions could affect the return value of the function. This is especially important if your function is used multiple places or if it’s nested deeply in a chain of function calls. In both cases, you can rest easy knowing that changes to external conditions won’t cause your code to break.
+- Another way to think about this is that reality is largely referentially transparent. If you think of gravity as a function, then gravitational force is the return value of calling that function on two objects.
+
+### side effects
+- To perform a side effect is to change the association between a name and its value within a given scope
+- Side effects are potentially harmful, however, because they introduce uncertainty about what the names in your code are referring to.
+- When calling a function that doesn’t have side effects, you only have to consider the relationship between the input and the output. You don’t have to worry about other changes that could be rippling through your system.
+- Clojure limit side effects of its core data structures by its immutability.
+
+## Immutable data structures
+### recursion 
+- it is you functional way to iterate over some collection to build a result 
+- Clojure has no assignment operator
+- you can't associate a new value with a name without creating a new scope
+> (def baby-name "oleg") // you first bind the name baby-name to the value "oleg" within the global scope
+>
+> baby-name     => output: "oleg"
+>
+> (let [baby-name "sasha"] baby-name)       => output: "sasha" // a new scope is introduced with let. So, within this scope you bind baby-name to "sasha"
+>
+> baby-name         => output: "oleg" // Once Clojure finishes evaluating the let expressionm you're back in the global scope and baby-name is evaluated to "oleg" once again 
+
+- each recursive call creates a new scope where arguments are bound to different values, all without the needing to alter the values originally passed to the function or perform any internal mutation
+- you should use **recur** when doing recursion for performance reasons (Clojure doesn't provide tail call optimization)
+> (defn sum
+    ([vals] (sum vals 0))
+    ([vals accumulating-total]
+    (if empty? vals)
+        accumulating-total
+        (recur (rest vals) (+ (first vals) accumulating-total))))
+>
+- Using recur isn’t that important if you’re recursively operating on a small collection, but if your collection contains thousands or millions values, you will definitely need to whip out recur so you don’t blow up your program with a stack overflow.
+- Clojure’s immutable data structures are implemented using structural sharing => It’s kind of like Git!
+
+### Composition
+- function composition is the process of combining functions so that the return value of one function is passed as an argument to another
+> (require '[Clojure.string :as s])  // we use reauire to access the string function library
+>
+> (defn clean [text] (s/replace (s/trim text) #"lol" "LOL"))  // the clean function works by passing an immutable value "text" to a pure function trim which returns an immutable value where the spaces at the start and end are trimmed => that value is then passed to the pure function replace which returns another immutable value after replacing the target sub-string with a new one
+>
+> (clear "my blah is so lol!     ")     => output: "my blah is so LOL!"  // clean function will work on any string by 1. decoupling functions and data 2. programming to a small set of abstractions 
+
+- function composition isn't so different from recursion => recursion continually passes the result of a function to another function (the same function)
+- 
 
 # Errors
 - *cannot be cast to clojure.lang.IFn* just means that you’re trying to use something as a function when it’s not.
 - *class java.lang.Long cannot be cast to class clojure.lang.IFn* means a number is being used where a function is expected.
 > I was using the take function like this (take(arg1 arg2)) where in fact i should use it like this (take arg1 arg2)
 - Parenthesis in Clojure are not a grouping construct, they are used primarily to invoke function calls.
-- 

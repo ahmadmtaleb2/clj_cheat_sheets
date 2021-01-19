@@ -1,6 +1,6 @@
 # Functions dictionary 
 it is a document that group all the functions that I encountered so far
-
+- You can derive new functions from existing functions in the same way that you derive new data from existing data
 
 ## filter 
 - a seq function  
@@ -18,6 +18,7 @@ it is a document that group all the functions that I encountered so far
 >
 > (filter (fn [x] (= (count x) 1)) ["a" "aa" "lisp" "clojure" "q" ""]) => output: ("a" "q")
 >
+
 
 ## some
 - Returns the first logical true value of (pred x) for any x in coll, else nil.  
@@ -55,6 +56,7 @@ this will return :fred if :fred is in the sequence, otherwise nil:
 > (sort > (vals {:foo 5, :bar 2, :baz 10}))     => output: (10 5 2)
 >
 
+
 ## sort-by
 - allows you to apply a function (sometimes called a key function) to the elements of a sequence and use the values it returns to determine the sort order.
 - Returns a sorted sequence of the items in coll, where the sort order is determined by comparing (keyfn item). 
@@ -71,6 +73,7 @@ avoid this, sort a copy of the array.
 >
 > (sort-by first > [[1 2] [2 2] [2 3]])     => output: ([2 2] [2 3] [1 2])
 >
+
 
 ## concat
 - concat simply appends the members of one sequence to the end of another
@@ -193,6 +196,7 @@ until that point and if it is the first element it will return a transducer **()
 >
 > (take-while #(= (rem (:month %) 2) 0) months)     => output: ()
 
+
 ## drop 
 - a seq function 
 - it take two arguments:
@@ -226,6 +230,7 @@ stateful transducer when no collection is provided.
 > (drop-while #(> 3 %) [5 3 1 2 3 4 5 6])       => output: (5 3 1 2 3 4 5 6)
 >
 
+
 ## into
 - on of the most important collection functions 
 - you can use it to convert the return value of seq functions back into the original data structure
@@ -238,7 +243,6 @@ stateful transducer when no collection is provided.
 > (into [] (set [:a :a])) => output: [:a] 
 >
 > (into {} (map identity {:sunlight-reaction "Glitter!"}))      => output: {:sunlight-reaction "Glitter!"}
-
 
 
 ## loop
@@ -294,9 +298,11 @@ stateful transducer when no collection is provided.
 ## seq 
 - find it in the sequences file
 
+
 # rem
 - remainder of dividing numerator by denominator.
 > (rem num div)
+
 
 ## odd
 - Returns true if n is odd, 
@@ -309,6 +315,7 @@ stateful transducer when no collection is provided.
 >
 > (odd? 0)      => output: false
 
+
 ## even
 - Returns true if n is even, 
 - throws an exception if n is not an integer
@@ -319,7 +326,6 @@ stateful transducer when no collection is provided.
 > (even? 2)      => output: true
 >
 > (even? 0)      => output: true
-
 
 
 ## range
@@ -379,6 +385,7 @@ stateful transducer when no collection is provided.
 - apply explodes a seqable data structure so it can be passed to a function that expects a rest parameter.
 > (apply max [0 1 2])       => output: 2
 
+
 ## partial
 - partial takes a function and any number of arguments. It then returns a new function. When you call the returned function, it calls the original function with the original arguments you supplied it along with the new arguments.
 - In general, you want to use partials when you find you’re repeating the same combination of function and arguments in many different contexts.
@@ -390,8 +397,132 @@ stateful transducer when no collection is provided.
 >
 > (add-missing-elements "sand" "sea")       => ouput: ["water" "earth" "air" "sand" "sea"]
 
+
 ## complement
 - Takes a fn f and returns a fn that takes the same arguments as f, has the same effects, if any, and returns the opposite truth value.
 > (complement f)
 **need an implementation to it for better understanding**
 
+
+## reverse
+- Returns a seq of the items in coll in reverse order
+- Not lazy.
+> (reverse coll)
+>
+> (reverse '(1 2 3))        => output: (3 2 1)
+>
+> (reverse "clojure")       => output: (\e \r \u \j \o \l \c)
+>
+> (apply str (reverse "clojure"))       => output: "erujolc"
+>
+
+
+## rseq
+- Returns, in constant time, a seq of the items in rev (which can be a vector or sorted-map), in reverse order
+- If rev is empty returns nil
+> (rseq rev)
+>
+> (vec (range 10))      => output: [0 1 2 3 4 5 6 7 8 9]
+> 
+> (rseq (vec (range 10)))       => output: [9 8 7 6 5 4 3 2 1 0]
+
+
+## every?
+- Returns true if (pred x) is logical true for every x in coll, else false.
+> (every? pred coll)
+>
+> (every? even? '(2 4 6))       => output: true
+>
+> (every? even? '(1 2 3))       => output: false
+>
+> (every? #{1 2} [1 2 3])       => output: false  //you can use every? with a set as the predicate to return true if every member of a collection is in the set
+>
+> (every? #{1 2} [1 2])     => output: true
+>
+
+
+## pos?
+- returns true if num is greater than zero
+- else false
+> (pos? num)
+>
+> (pos? 1)      => output: true
+>
+> (pos? 0)      => output: false
+>
+> (pos? -1)     => output: false
+
+
+## cons
+- Returns a new seq where x is the first element and seq is the rest.
+> (cons x seq)
+>
+> (cons 1 '(2 3 4 5))       => output: (1 2 3 4 5)
+>
+> (cons [1 2] [4 5 6])      => output: [[1 2] 4 5 6]
+>
+> 
+
+
+## rest
+- Returns a possibly empty seq of the items after the first. Calls seq on its argument.
+> (rest coll)
+>
+> (rest [1 2 3 4 5])        => output: [2 3 4 5]
+>
+> (rest ["a" "b" "c"])      => output: ["b" "c"]
+>
+> (rest '())        => output: ()
+>
+> (rest nil)        => output: ()
+
+
+## dissoc
+- dissoc[iate]. Returns a new map of the same (hashed/sorted) type, that does not contain a mapping for key(s).
+> (dissoc map)  (dissoc map key)    (dissoc map key & ks)
+>
+> (dissoc {:a 1 :b 2 :c 3})     => output: {:a 1, :b 2, :c 3}  // dissoc nothing 
+>
+> (dissoc {:a 1 :b 2 :c 3} :b)      output: => {:a 1, :c 3}  // dissoc key :b
+>
+>(dissoc {:a 1 :b 2 :c 3} :d)       => output: {:a 1, :b 2, :c 3} // dissoc not existing key
+>
+> (dissoc {:a 1 :b 2 :c 3} :c :b)       => output: {:a 1} // several keys at once
+
+## comp
+- used for creating a function from the composition of any number of functions 
+- Takes a set of functions and returns a fn that is the composition of those fns.  
+- The returned fn takes a variable number of args, applies the rightmost of fns to the args, the next fn (right-to-left) to the result, etc.
+- using math notation => using **comp** on the functions f1 f2 f3 ... fn creates a new function g such as g(x1, x2, x3, ....xn) = f1(f2(fn(x1, x2, ....xn)))
+- **NOTE** the first function applied (the last function in comp = fn) can take any number of arguments, whereas the remaining functions must be able to take only one argument 
+- f one of the functions you want to compose needs to take more than one argument => You wrap it in an anonymous function.
+- Cojure's comp function can compose any number of functions
+
+> (comp)    (comp f)    (comp f g)  (comp f g & fs)
+>
+> (def foo (comp inc *))        //we are creating an anonyous function by composing the inc and * functions 
+> (foo 2 3)     => output: 7  // foo function is applied took the two args 2 and 3 => foo first multiplies the numbers 2 and 3 and then increments the result by 1
+
+
+## memoize
+- memoize functions so that Clojure remembers the result of a particular function call
+- Memoization lets you take advantage of referential transparency by storing the arguments passed to a function and the return value of the function. That way, subsequent calls to the function with the same arguments can return the result immediately.
+- Returns a memoized version of a referentially transparent function. 
+- The memoized version of the function keeps a cache of the mapping from arguments to results and, when calls with the same arguments are repeated often, has higher performance at the expense of higher memory use.
+- This implementation could be useful for functions that are computationally intensive or that make network requests.
+
+> (memoize f)
+>
+> (defn sleepy-id
+    "returns the given value after 1 sec"
+    [x]
+    (Thread/sleep 1000) x)
+> (time (sleepy-id "Mr. Fantastico"))       => output: "Mr. Fantastico"  // elapsed time: 1000.34 msecs  // every call to sleepy-id for the same argument will take 1000 msecs to be evaluated 
+> (def memo-sleepy-id (memoize sleepy-id))  // we create a new memoized version of sleepy-id
+>
+> (time (memo-sleepy-id "Mr. Fantastico"))       => output: "Mr. Fantastico"  // elapsed time: 1000.615 msecs  // only the first call will waits one second
+>
+> (time (sleepy-id "Mr. Fantastico"))       => output: "Mr. Fantastico"  // elapsed time: 0.038 msecs  // every subsequent functionc all return immediately 
+
+
+## 

@@ -67,6 +67,11 @@
 - If you can perform all of an abstraction’s operations on an object, then that object is an instance of the abstraction.
 - For example, the battery abstraction includes the operation “connect a conducting medium to its anode and cathode,” and the operation’s output is electrical current. It doesn’t matter if the battery is made out of lithium or out of potatoes. It’s a battery as long as it responds to the set of operations that define battery.
 
+### Collection Abstraction 
+- The collection abstraction is closely related to the sequence abstraction. All of Clojure’s core data structures (vectors, maps, lists, and sets) take part in both abstractions.
+- The sequence abstraction is about operating on members individually, whereas the collection abstraction is about the data structure as a whole.
+- the collection functions count , empty? , and every? aren’t about any individual element; they’re about the whole
+
 
 ## Indirection 
 - In programming, indirection is a generic term for the mechanisms a language employs so that one name can have multiple, related meanings.

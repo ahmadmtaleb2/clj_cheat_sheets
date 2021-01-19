@@ -30,6 +30,12 @@
 # Lazy Seqs
 - Many functions, including map and filter , return a lazy seq. 
 - A lazy seq is a seq whose members aren’t computed until you try to access them. 
-- Computing a seq’s members is called realizing the seq
+- Computing a seq’s members is called **realizing** the seq
 - Deferring the computation until the moment it’s needed makes your programs more efficient, and it has the surprising benefit of allowing you to construct **infinite sequences**.
-- 
+- When you use map , the lazy seq it returns doesn’t include any realized elements yet, but it does have the recipe for generating its elements. 
+- Every time you try to access an unrealized element, the lazy seq will use its recipe to generate the requested element.
+- Clojure chunks its lazy sequences, which just means that whenever Clojure has to realize an element, it pre-emptively realizes some of the next elements as well.
+- Clojure comes with a few functions to create infinite sequences like repeat
+
+- A lazy seq’s recipe doesn’t have to specify an endpoint. 
+- Functions like first and take , which realize the lazy seq, have no way of knowing what will come next in a seq, and if the seq keeps providing elements, well, they’ll just keep taking them.

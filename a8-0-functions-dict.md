@@ -227,9 +227,18 @@ stateful transducer when no collection is provided.
 >
 
 ## into
-> (into *to* *from*)
+- on of the most important collection functions 
+- you can use it to convert the return value of seq functions back into the original data structure
+- Returns a new coll consisting of to-coll with all of the items of from-coll conjoined. 
+- A transducer may be supplied.
+- both arguments can be the same type or different
 - add the element in the from to the element in to
+> (into *to* *from*)
+>
 > (into [] (set [:a :a])) => output: [:a] 
+>
+> (into {} (map identity {:sunlight-reaction "Glitter!"}))      => output: {:sunlight-reaction "Glitter!"}
+
 
 
 ## loop
@@ -341,4 +350,48 @@ stateful transducer when no collection is provided.
 > (time (concat '(1 2) '(3 4)))     => output: "Elapsed time: 0.066739 msecs"  (1 2 3 4)
 
 
-## 
+## repeat
+- creates a sequence whose every member is the argument you pass
+- Returns a lazy (infinite!, or length n if supplied) sequence of xs.
+> (repeat x)    (repeat n x)
+>
+> (take 5 (repeat "x"))     => ("x" "x" "x" "x" "x")
+>
+> (concat (take 8 (repeat "na")) ["Batman!"])       => output: ("na" "na" "na" "na" "na" "na" "na" "na" "Batman!")
+
+
+## repeatedly
+- Takes a function of no args, presumably with side effects, and returns an infinite (or length n if supplied) lazy sequence of calls to it
+> (repeatedly f)    (repeatedly n f)
+>
+> (repeatedly 10 (fn [] (rand-int 10)))     => output: (9 1 5 3 6 4 3 4 0 3)
+>
+> (take 10 (repeatedly (fn [] (rand-int 10))))      => output: (6 4 2 8 5 8 5 2 6 9)
+
+
+## cons
+- Returns a new seq where x is the first element and seq is the rest.
+- Lisp programmers call it consing when they use the cons function.
+> (cons 1 '(2 3 4 5 6))     => output: (1 2 3 4 5 6)
+
+
+## apply
+- apply explodes a seqable data structure so it can be passed to a function that expects a rest parameter.
+> (apply max [0 1 2])       => output: 2
+
+## partial
+- partial takes a function and any number of arguments. It then returns a new function. When you call the returned function, it calls the original function with the original arguments you supplied it along with the new arguments.
+- In general, you want to use partials when you find you’re repeating the same combination of function and arguments in many different contexts.
+> (def add10 (partial +10))
+>
+> (add10 3)     => output: 13
+> 
+> (def add-missing-elements (partial conj ["water" "earth" "air"]))
+>
+> (add-missing-elements "sand" "sea")       => ouput: ["water" "earth" "air" "sand" "sea"]
+
+## complement
+- Takes a fn f and returns a fn that takes the same arguments as f, has the same effects, if any, and returns the opposite truth value.
+> (complement f)
+**need an implementation to it for better understanding**
+

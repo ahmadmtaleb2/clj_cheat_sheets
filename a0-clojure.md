@@ -150,7 +150,10 @@
 > (clear "my blah is so lol!     ")     => output: "my blah is so LOL!"  // clean function will work on any string by 1. decoupling functions and data 2. programming to a small set of abstractions 
 
 - function composition isn't so different from recursion => recursion continually passes the result of a function to another function (the same function)
-- 
+
+## Note
+- To get the most from Clojure, try to keep your impure functions to a minimum. In an immutable world, you use recursion instead of for / while loops, and function composition instead of successions of mutations. Pure functions allow powerful techniques like function composition functions and memoization.
+
 
 # Errors
 - *cannot be cast to clojure.lang.IFn* just means that you’re trying to use something as a function when it’s not.

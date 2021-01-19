@@ -522,7 +522,5 @@ stateful transducer when no collection is provided.
 >
 > (time (memo-sleepy-id "Mr. Fantastico"))       => output: "Mr. Fantastico"  // elapsed time: 1000.615 msecs  // only the first call will waits one second
 >
-> (time (sleepy-id "Mr. Fantastico"))       => output: "Mr. Fantastico"  // elapsed time: 0.038 msecs  // every subsequent functionc all return immediately 
+> (time (sleepy-id "Mr. Fantastico"))       => output: "Mr. Fantastico"  // elapsed time: 0.038 msecs  // every subsequent functionc all return immediately
 
-
-## 

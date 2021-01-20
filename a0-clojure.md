@@ -31,7 +31,7 @@
 - Clojure has no privileged functions. It doesn't care what the function is or where it came from; it treats all functions the same. 
 - Clojure just cares about applying functions
 - You don’t have to worry about special rules or syntax for working with different functions.
-
+- *in any LISP language, code is just data (or more specifically, code is a subset of data that conforms to a language spec)*. 
 
 ## Clojure language
 - The Clojure language is a Lisp dialect with a functional emphasis whose syntax and semantics are independent of any implementation. 

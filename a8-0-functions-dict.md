@@ -524,3 +524,45 @@ stateful transducer when no collection is provided.
 >
 > (time (sleepy-id "Mr. Fantastico"))       => output: "Mr. Fantastico"  // elapsed time: 0.038 msecs  // every subsequent functionc all return immediately
 
+
+## val
+- returns the value in the map entry
+> (val e)
+>
+> (map val {:a 1 :b 2})     => output: (1 2)
+>
+> (val (first {:one :two}))     => outout: :two
+
+## vals
+- returns a sequence of the map's values, in the same order as (seq map)
+> (vals map)
+>
+> (vals {:a "foo", :b "bar"})       => output: ("foo" "bar")
+>
+> (vals {})     => output: nil
+>
+> (vals nil)        => output: nil
+
+
+## keys
+- returns a sequence of the map's keys, in the same order as (seq map)
+> (keys map)
+>
+> (keys {:keys :and, :some :values})        => output: (:keys :some)
+>
+> (keys {})     => output: nil
+>
+> (keys nil)        => output: nil
+
+
+## keep
+- returns a lazy sequence of the non-nil results of (f item). 
+- Note, this means false return values will be included
+- f must be free of side efefcts
+- returns a transducer when no collection is provided 
+> (keep f)      (keep f coll)
+>
+> (keep even? (range 1 10))     => output: (false true false true false true false true false)
+>
+> (keep #{:name :color :height} (keys {:name "b" :color "red" :height 100 :c "nothing"}))       => output: (:name :color :height)
+

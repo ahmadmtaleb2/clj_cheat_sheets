@@ -37,3 +37,14 @@ A Middleware takes a Handler and wraps it with a new handler that interposes its
 Adapter
 Connects a top level Ring handler to an HTTP Server.
 
+
+## Clojars 
+- it is a dead easy community repository for open source Clojure libraries.
+
+(require '[clojure.spec.alpha :as s])
+(defn person-name
+[person]
+{ :pre [(s/valid? ::person person)]
+:post [(s/valid? string? %)]
+}
+(str (::first-name person) " " (::last-name person)))

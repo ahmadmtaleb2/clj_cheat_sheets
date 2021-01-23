@@ -1,5 +1,6 @@
 # Keywords
 
+- Keywords start with a leading colon (:) and always evaluate to themselves 
 - They’re primarily used as keys in maps
 - Keywords can be used as **functions** that look up the corresponding value in a data structure
 > (:a {:a 1 :b 2 :c 3})     => output: 1

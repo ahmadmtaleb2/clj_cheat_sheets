@@ -23,7 +23,7 @@
 - Operations are how you do things. All Operations take the form of *opening parenthesis, operator, operands, closing parenthesis*
 > (operator operand1 operand 2 ... operandn)
 
-- Clojure uses whitespace to separate operands, and it treats commas as whitespace. NO COMMAS!
+- Clojure uses whitespace to separate operands, and it treats commas as whitespace. NO COMMAS!.
 - the **+** operator adds the operrands 
 - the **str** operator concatenates strings to form a new string 
 - Clojure’s support for first-class functions allows you to build more power­ful abstractions than you can in languages without them. Those unfamiliar with this kind of programming think of functions as allowing you to generalize operations over data instances.
@@ -32,6 +32,18 @@
 - Clojure just cares about applying functions
 - You don’t have to worry about special rules or syntax for working with different functions.
 - *in any LISP language, code is just data (or more specifically, code is a subset of data that conforms to a language spec)*. 
+- the ; in Clojure creates a comment to the end of the line 
+- Clojure is a homoiconic language, which is a term describing the fact that Clojure programs are represented by Clojure data structures 
+- Clojure is defined in terms of the evaluation of data structures and not in terms of the syntax of character streams /files 
+- Most Clojure forms evaluate to themseleves, except **symbols** and **lists**
+- Symbols are used to refer to something else and when evaluated return what they refer to 
+- Lists are evaluated as invocation 
+    - for the previous mentioned reasons, you can use single quote to suspend evaluation => So, symbols are symbol without looking up what it refers to => and list are a list of data values and not code to be evaluated 
+    > 'x        => output: x 
+    >
+    > '(1 2 3)
+- In Clojure, everything is an expression that evaluates to a value. Some expression also have side effects
+
 
 ## Clojure language
 - The Clojure language is a Lisp dialect with a functional emphasis whose syntax and semantics are independent of any implementation. 
@@ -46,6 +58,18 @@
 - Java programs are usually distributed as JAR files.
 - The Java program clojure.jar reads Clojure source code and produces Java bytecode.
 - That Java bytecode is then executed by the same JVM process already running clojure.jar.
+
+## Clojure Reader
+- most Clojure prgrams begin life as text files
+- it is the reader's task to parse the text and produce the data structure for the compiler to see 
+- this is not a phase of the compiler 
+- The reader is represented by the function **read**, which reads the next **form** (not character) from a stream, and returns the object represented by that form.
+- the reader may read the source either from .clj or be given a series of expressions interactively 
+- the reader produces Clojure data 
+- the clojure compiler then produces the bytecode for the JVM. 
+- the unit of source code is a Clojure expression, not a Clojure source file 
+- Source files are read as a series of expressions, just as if you typed those expression interactively at the REPL
+- Separating the reader and the compiler is a key separation that makes room for macros. Macros are special functions that take code (as data) amd emit code (as data)
 
 # ns
 - ns declare a namespace

@@ -46,3 +46,11 @@
 
 - **source** => we can see not only the documentation but the underlying source for any function accessible by the runtime
 > (source dir)
+
+
+## namespace
+- to check in which namespace you are
+> *ns*
+- to change to another namespace 
+> (in-ns 'namespace-name)
+

@@ -533,6 +533,17 @@ stateful transducer when no collection is provided.
 >
 > (val (first {:one :two}))     => outout: :two
 
+- val alone could not be used as follow I DON'T KNOW WHY BUT IT SEEMS YOU NEED TO GIVE IT AS A FUNCTION IN MAP OR GIVE IT A FUNCTION LIKE FIRST (NEED TO FIGURE OUT WHY)
+> (val {:email "email@example.com"})     => output: `Execution error (ClassCastException) at user/eval2022 (REPL:1).
+class clojure.lang.PersistentArrayMap cannot be cast to class java.util.Map$Entry (clojure.lang.PersistentArrayMap is in unnamed module of loader 'bootstrap'; java.util.Map$Entry is in module java.base of loader 'bootstrap')`
+
+- use val with map like so 
+> (map val {:email "email@example.com"})        => output: ("email@example.com")  // NOTICE: the return value is a lazy sequence
+
+- OR 
+> (val (clojure.lang.MapEntry. :email "email@example.com"))     => output: "email@example.com"  /NOTICE: the return value is a string 
+
+
 ## vals
 - returns a sequence of the map's values, in the same order as (seq map)
 > (vals map)
@@ -565,4 +576,15 @@ stateful transducer when no collection is provided.
 > (keep even? (range 1 10))     => output: (false true false true false true false true false)
 >
 > (keep #{:name :color :height} (keys {:name "b" :color "red" :height 100 :c "nothing"}))       => output: (:name :color :height)
+
+## slurp
+- Opens a reader on f and reads all its contents, returning a string.
+> (slurp f & opts)
+>
+> user=> (slurp "https://clojuredocs.org")      => output: This will return the html content of clojuredocs.org
+>
+> user=> (slurp "/home/Desktop/somefile.md")        => Access absolute location and display the content of somefile
+
+
+## 
 

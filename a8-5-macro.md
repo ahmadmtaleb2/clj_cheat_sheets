@@ -5,7 +5,7 @@
 - This process continues for all the forms. 
 - Using -> can sometimes make your code more readable.
 
-> (-> (-> [2 5 4 1 3 6] (reverse) (rest) (sort) (last))     // output => 5
+> ((-> [2 5 4 1 3 6] (reverse) (rest) (sort) (last))     // output => 5
 >
 - the previous expression is the same as the following 
 > (last (sort (rest (reverse [2 5 4 1 3 6]))))      // output => 5
